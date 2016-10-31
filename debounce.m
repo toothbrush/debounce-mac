@@ -69,19 +69,20 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
 - (CGEventRef)processEvent:(CGEventRef)cgEvent
 {
   NSEvent* event = [NSEvent eventWithCGEvent:cgEvent];
+
   long long currentKeytime = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
   UInt16 currentKeycode = [event keyCode];
-  BOOL debounce = false;
+  BOOL debounce = NO;
 
   if (currentKeycode == lastKeycode &&
-      (currentKeytime - lastKeytime) < 45) {
+      ![event isARepeat] &&
+      (currentKeytime - lastKeytime) < 100) {
 
-    NSLog(@"BOUNCE detected!!!  Letter \"%@\".", event.characters);
+    NSLog(@"BOUNCE detected!!!  Character: %@", event.characters);
     NSLog(@"Time between keys: %lldms", (currentKeytime - lastKeytime));
-    NSLog(@"Keycode is: %d", lastKeycode);
 
     // Cancel keypress event
-    debounce = true;
+    debounce = YES;
   }
 
   if(debounce) {
