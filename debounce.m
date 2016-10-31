@@ -2,6 +2,13 @@
 //    clang -fobjc-arc -framework Cocoa  ./debounce.m  -o debounce
 //    sudo ./debounce
 
+/*
+ * Keyboard debouncer, main audience is users of flaky mechanical
+ * keyboards.  Script heavily inspired by Brad Allred's answer on
+ * StackOverflow:
+ * <http://stackoverflow.com/questions/19646108/modify-keydown-output>.
+ */
+
 #import <Foundation/Foundation.h>
 #import <AppKit/NSEvent.h>
 
