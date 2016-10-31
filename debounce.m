@@ -1,6 +1,6 @@
 // compile and run from the commandline with:
-//    clang -fobjc-arc -framework Cocoa  ./foo.m  -o foo
-//    sudo ./foo
+//    clang -fobjc-arc -framework Cocoa  ./debounce.m  -o debounce
+//    sudo ./debounce
 
 #import <Foundation/Foundation.h>
 #import <AppKit/NSEvent.h>
@@ -34,7 +34,7 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
                                  (CGEventTapCallBack)_tapCallback,
                                  (__bridge void *)(self));
     if (!_eventTap) {
-      NSLog(@"unable to create event tap. must run as root or add privlidges for assistive devices to this app.");
+      NSLog(@"Unable to create event tap.  Must run as root or add privlidges for assistive devices to this app.");
       return NO;
     }
   }
@@ -51,7 +51,7 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
 - (void)listen
 {
   if (!_runLoopSource) {
-    if (_eventTap) {//dont use [self tapActive]
+    if (_eventTap) { // Don't use [self tapActive]
       _runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault,
                                                      _eventTap, 0);
       // Add to the current run loop.
@@ -61,7 +61,7 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
       NSLog(@"Registering event tap as run loop source.");
       CFRunLoopRun();
     }else{
-      NSLog(@"No Event tap in place! You will need to call listen after tapEvents to get events.");
+      NSLog(@"No Event tap in place!  You will need to call listen after tapEvents to get events.");
     }
   }
 }
@@ -93,7 +93,7 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
   lastKeycode = currentKeycode;
 
   _lastEvent = [event CGEvent];
-  CFRetain(_lastEvent); // must retain the event. will be released by the system
+  CFRetain(_lastEvent); // Must retain the event, will be released by the system
 
   return _lastEvent;
 }
@@ -106,7 +106,7 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
   }
   if (_eventTap){
 
-    //kill the event tap
+    // Kill the event tap
     CGEventTapEnable(_eventTap, FALSE);
     CFRelease(_eventTap);
   }
@@ -114,8 +114,8 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
 
 @end
 CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, KeyChanger* listener) {
-  //Do not make the NSEvent here.
-  //NSEvent will throw an exception if we try to make an event from the tap timout type
+  // Do not make the NSEvent here.
+  // NSEvent will throw an exception if we try to make an event from the tap timeout type
   @autoreleasepool {
     if(type == kCGEventTapDisabledByTimeout) {
       NSLog(@"event tap has timed out, re-enabling tap");
@@ -134,7 +134,7 @@ int main(int argc, const char * argv[])
   @autoreleasepool {
     KeyChanger* keyChanger = [KeyChanger new];
     [keyChanger tapEvents];
-    [keyChanger listen]; //blocking call.
+    [keyChanger listen]; // This is a blocking call.
   }
   return 0;
 }
