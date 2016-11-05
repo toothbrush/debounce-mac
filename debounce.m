@@ -12,6 +12,9 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/NSEvent.h>
 
+#define DEBOUNCE_DELAY 100
+#define SYNTHETIC_KB_ID 666
+
 typedef CFMachPortRef EventTap;
 
 @interface KeyChanger : NSObject
@@ -80,13 +83,18 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
   long long currentKeytime = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
   UInt16 currentKeycode = [event keyCode];
   BOOL debounce = NO;
+  long long keyboard_id = CGEventGetIntegerValueField(cgEvent, kCGKeyboardEventKeyboardType);
 
-  if (currentKeycode == lastKeycode &&
+  if (keyboard_id != SYNTHETIC_KB_ID &&
+      currentKeycode == lastKeycode &&
       ![event isARepeat] &&
-      (currentKeytime - lastKeytime) < 100) {
+      (currentKeytime - lastKeytime) < DEBOUNCE_DELAY) {
 
-    NSLog(@"BOUNCE detected!!!  Character: %@", event.characters);
-    NSLog(@"Time between keys: %lldms", (currentKeytime - lastKeytime));
+    NSLog(@"BOUNCE detected!!!  Character: %@",
+          event.characters);
+    NSLog(@"Time between keys: %lldms (limit <%dms)",
+          (currentKeytime - lastKeytime),
+          DEBOUNCE_DELAY);
 
     // Cancel keypress event
     debounce = YES;
@@ -120,6 +128,7 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
 }
 
 @end
+
 CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, KeyChanger* listener) {
   // Do not make the NSEvent here.
   // NSEvent will throw an exception if we try to make an event from the tap timeout type
