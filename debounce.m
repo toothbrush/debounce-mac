@@ -22,7 +22,6 @@ typedef CFMachPortRef EventTap;
 @private
   EventTap _eventTap;
   CFRunLoopSourceRef _runLoopSource;
-  CGEventRef _lastEvent;
   long long lastKeytime;
   UInt16 lastKeycode;
 }
@@ -107,10 +106,7 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
   lastKeytime = currentKeytime;
   lastKeycode = currentKeycode;
 
-  _lastEvent = [event CGEvent];
-  CFRetain(_lastEvent); // Must retain the event, will be released by the system
-
-  return _lastEvent;
+  return cgEvent;
 }
 
 - (void)dealloc
