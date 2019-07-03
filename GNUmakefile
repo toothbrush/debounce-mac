@@ -1,6 +1,9 @@
+.PHONY: all
 all: debounce
 
 debounce: debounce.m
-	clang -fobjc-arc -framework Cocoa ./debounce.m -o $@
+	clang -fobjc-arc -framework Cocoa $^ -o $@
 
-.PHONY: all
+.PHONY: install
+install: debounce
+	cp $< /usr/local/bin
