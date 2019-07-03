@@ -38,7 +38,7 @@ $ make install
 
 Another [helpful
 contribution](https://github.com/toothbrush/debounce-mac/issues/2),
-this time from @cpouldev.  If you'd like to auto-start `debounce` at
+this time from [**@cpouldev**](https://github.com/cpouldev).  If you'd like to auto-start `debounce` at
 login, you might find something like the [included LaunchAgent
 configuration](./com.debounceMac.app.plist) helpful.
 
@@ -82,7 +82,7 @@ $ sudo ./debounce
 2019-03-03 10:47:02.205 debounce[59588:499245] No Event tap in place!  You will need to call listen after tapEvents to get events.
 ```
 
-@DanGrayson kindly [alerted me to the
+[**@DanGrayson**](https://github.com/DanGrayson) kindly [alerted me to the
 fact](https://github.com/toothbrush/debounce-mac/issues/4) that on
 modern macOS, you'll need to enable universal accessibility features
 to let this work.  It appears that you'll need to go to System
