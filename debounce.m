@@ -1,4 +1,4 @@
-// compile and run from the commandline with:
+// compile and run from the command-line with:
 //    clang -fobjc-arc -framework Cocoa  ./debounce.m  -o debounce
 //    sudo ./debounce
 
@@ -43,7 +43,7 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
                                  (CGEventTapCallBack)_tapCallback,
                                  (__bridge void *)(self));
     if (!_eventTap) {
-      NSLog(@"Unable to create event tap.  Must run as root or add privlidges for assistive devices to this app.");
+      NSLog(@"Unable to create event tap.  Must run as root or add Accessibility privileges to this app.");
       return NO;
     }
   }
@@ -130,7 +130,7 @@ CGEventRef _tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef even
   // NSEvent will throw an exception if we try to make an event from the tap timeout type
   @autoreleasepool {
     if(type == kCGEventTapDisabledByTimeout) {
-      NSLog(@"event tap has timed out, re-enabling tap");
+      NSLog(@"Event tap has timed out, re-enabling tap.");
       [listener tapEvents];
       return nil;
     }
