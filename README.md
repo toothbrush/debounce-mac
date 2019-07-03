@@ -26,6 +26,50 @@ $ sudo ./debounce
 
 It needs root because it intercepts keystrokes.
 
+If you really want, you can "install" it.  Assuming that
+`/usr/local/bin` is in your `$PATH` (which it is if you use Homebrew)
+you can:
+
+```ShellSession
+$ make install
+```
+
+### Auto-start at login
+
+Another [helpful
+contribution](https://github.com/toothbrush/debounce-mac/issues/2),
+this time from @cpouldev.  If you'd like to auto-start `debounce` at
+login, you might find something like the [included LaunchAgent
+configuration](./com.debounceMac.app.plist) helpful.
+
+Put that somewhere `launchctl` can find it, like
+`~/Library/LaunchAgents/com.debounceMac.app.plist`, then load the
+configuration.  macOS will automatically prompt you to give `debounce`
+Accessibility access, this is needed to be able to intercept and
+modify keystrokes.
+
+```ShellSession
+$ launchctl load ~/Library/LaunchAgents/com.debounceMac.app.plist
+```
+
+macOS will automatically prompt you to give `debounce` Accessibility
+access, this is needed to be able to intercept and modify keystrokes.
+When that's done, start it.
+
+```ShellSession
+$ launchctl start com.debounceMac.app
+```
+
+To remove / uninstall completely:
+
+```ShellSession
+$ launchctl stop com.debounceMac.app
+$ launchctl unload ~/Library/LaunchAgents/com.debounceMac.app.plist
+$ rm ~/Library/LaunchAgents/com.debounceMac.app.plist
+$ launchctl list
+$ rm /usr/local/bin/debounce
+```
+
 ### Accessibility / permissions
 
 You might get an error something like the following, even when running
