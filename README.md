@@ -89,4 +89,4 @@ to let this work.  It appears that you'll need to go to System
 Preferences > Privacy > Accessibility, and grant Terminal.app
 permission, not the `debounce` binary as you might expect.
 
-If you make changes to the code and r-build the debounce binary, you will have to manually remove and re-grant accessibility permissions for the app. Both `Accessibility` and `Input Monitoring` permissions are required.
+If you make changes to the code and rebuild the debounce binary, you will have to manually remove and re-grant accessibility permissions for the app. Both `Accessibility` and `Input Monitoring` permissions are required.
